@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RoleDatas\RoleDatas.csproj" />
+    <ProjectReference Include="..\RoleServices\RoleServices.csproj" />
   </ItemGroup>
 
 </Project>

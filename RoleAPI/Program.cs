@@ -1,11 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using RoleDatas.DBModels;
+using RoleServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // add dbcontext
 var connectionString = builder.Configuration.GetValue<String>("DatabaseSettings:ConnectionString");
 builder.Services.AddDbContext<RoleContext> (x => x.UseOracle(connectionString));
+builder.Services.AddScoped<IDuongDayServices, DuongDayServices>();
 
 // Add services to the container.
 builder.Services.AddControllers();
