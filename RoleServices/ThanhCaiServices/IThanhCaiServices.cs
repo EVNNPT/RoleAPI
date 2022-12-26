@@ -7,4 +7,5 @@ public interface IThanhCaiServices
     Task<NvThanhcai> GetDetailThanhCai(string MaPMIS);
     Task AddThanhCai(NvThanhcai item);
     Task UpdateThanhCai(NvThanhcai item);
+    Task<List<NvFiledinhkem>> GetFileDinhKem(string MaLoaiThietBi, string MaDT);
 }

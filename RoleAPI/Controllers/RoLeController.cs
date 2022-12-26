@@ -46,7 +46,7 @@ namespace RoleAPI.Controllers
                 return Ok(new
                 {
                     fail = false,
-                    message = "Thêm mới thông tin 'Rơ le' thành công.'",
+                    message = "Thêm mới thông tin 'Rơ le' thành công.",
                 });
             }
             catch (Exception ex)
@@ -69,7 +69,7 @@ namespace RoleAPI.Controllers
                 return Ok(new
                 {
                     fail = false,
-                    message = "Cập nhật thông tin 'Rơ le' thành công.'",
+                    message = "Cập nhật thông tin 'Rơ le' thành công.",
                 });
             }
             catch (Exception ex)
@@ -80,6 +80,14 @@ namespace RoleAPI.Controllers
                     message = ex.Message,
                 });
             }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("get-file-dinh-kem-rl")]
+        public async Task<IActionResult> GetFileDinhKem(string MaLoaiThietBi, string MaDT)
+        {
+            var ret = await _roLeServices.GetFileDinhKem(MaLoaiThietBi, MaDT);
+            return Ok(ret);
         }
     }
 }

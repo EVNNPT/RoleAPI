@@ -7,4 +7,5 @@ public interface IMayBienApServices
     Task<NvMaybienap> GetDetailMayBienAp(string MaPMIS);
     Task AddMayBienAp(NvMaybienap item);
     Task UpdateMayBienAp(NvMaybienap item);
+    Task<List<NvFiledinhkem>> GetFileDinhKem(string MaLoaiThietBi, string MaDT);
 }

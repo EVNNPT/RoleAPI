@@ -72,4 +72,11 @@ public class MayBienApServices : IMayBienApServices
         ret.Ghichu = item.Ghichu;
         _ = await _context.SaveChangesAsync();
     }
+
+    public async Task<List<NvFiledinhkem>> GetFileDinhKem(string MaLoaiThietBi, string MaDT)
+    {
+        var rets = new List<NvFiledinhkem>();
+        rets = await _context.NvFiledinhkems.Where(it => it.Maloaithietbi == MaLoaiThietBi && it.Madt == MaDT).ToListAsync();
+        return rets;
+    }
 }

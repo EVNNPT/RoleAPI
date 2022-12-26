@@ -46,7 +46,7 @@ namespace RoleAPI.Controllers
                 return Ok(new
                 {
                     fail = false,
-                    message = "Thêm mới thông tin 'Máy biến áp' thành công.'",
+                    message = "Thêm mới thông tin 'Máy biến áp' thành công.",
                 });
             }
             catch (Exception ex)
@@ -69,7 +69,7 @@ namespace RoleAPI.Controllers
                 return Ok(new
                 {
                     fail = false,
-                    message = "Cập nhật thông tin 'Máy biến áp' thành công.'",
+                    message = "Cập nhật thông tin 'Máy biến áp' thành công.",
                 });
             }
             catch (Exception ex)
@@ -80,6 +80,14 @@ namespace RoleAPI.Controllers
                     message = ex.Message,
                 });
             }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("get-file-dinh-kem-mba")]
+        public async Task<IActionResult> GetFileDinhKem(string MaLoaiThietBi, string MaDT)
+        {
+            var ret = await _mayBienApServices.GetFileDinhKem(MaLoaiThietBi, MaDT);
+            return Ok(ret);
         }
     }
 }

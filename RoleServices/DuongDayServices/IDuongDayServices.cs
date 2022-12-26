@@ -1,4 +1,5 @@
-﻿using RoleDatas.DBModels;
+﻿using RoleDataModel.Models;
+using RoleDatas.DBModels;
 
 namespace RoleServices;
 public interface IDuongDayServices
@@ -7,4 +8,7 @@ public interface IDuongDayServices
     Task<NvDuongday> GetDetailDuongDay(string MaPMIS);
     Task AddDuongDay(NvDuongday item);
     Task UpdateDuongDay(NvDuongday item);
+    Task<List<NvFiledinhkem>> GetFileDinhKem(string MaLoaiThietBi, string MaDT);
+    Task<List<DTLienQuanModel>> GetDTLienQuan(string MaDuongDay);
+    Task AddDTLienQuan(NvThietbithuocdd item);
 }

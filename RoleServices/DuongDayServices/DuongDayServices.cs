@@ -1,5 +1,6 @@
 ﻿using RoleDatas.DBModels;
 using Microsoft.EntityFrameworkCore;
+using RoleDataModel.Models;
 
 namespace RoleServices;
 public class DuongDayServices : IDuongDayServices
@@ -73,5 +74,63 @@ public class DuongDayServices : IDuongDayServices
         ret.Daunoicuoi = item.Daunoicuoi;
         ret.Ghichu = item.Ghichu;
         _ = await _context.SaveChangesAsync();
+    }
+
+    public async Task<List<NvFiledinhkem>> GetFileDinhKem(string MaLoaiThietBi, string MaDT)
+    {
+        var rets = new List<NvFiledinhkem>();
+        rets = await _context.NvFiledinhkems.Where(it => it.Maloaithietbi == MaLoaiThietBi && it.Madt == MaDT).ToListAsync();
+        return rets;
+    }
+
+    public async Task<List<DTLienQuanModel>> GetDTLienQuan(string MaDuongDay)
+    {
+        var rets = new List<DTLienQuanModel>();
+        var query1 = from a in _context.NvThietbithuocdds
+                     join b in _context.NvMaybienaps
+                     on a.Matbkhac equals b.Mapmis
+                     where a.Maduongday == MaDuongDay
+                     select new DTLienQuanModel
+                     {
+                         Maduongday = a.Maduongday,
+                         Loaitbkhac = "MBA",
+                         Matbkhac = b.Mapmis,
+                         Tenthietbi = b.Tenmba
+                     };
+        var results1 = await query1.ToListAsync();
+        var query2 = from a in _context.NvThietbithuocdds
+                     join b in _context.NvRoles
+                     on a.Matbkhac equals b.Mapmis
+                     where a.Maduongday == MaDuongDay
+                     select new DTLienQuanModel
+                     {
+                         Maduongday = a.Maduongday,
+                         Loaitbkhac = "ROLE",
+                         Matbkhac = b.Mapmis,
+                         Tenthietbi = b.Tenrole
+                     };
+        var results2 = await query2.ToListAsync();
+        foreach (var item in results1)
+        {
+            rets.Add(item);
+        }
+        foreach (var item in results2)
+        {
+            rets.Add(item);
+        }
+        return rets;
+    }
+
+    public async Task AddDTLienQuan(NvThietbithuocdd item)
+    {
+        try
+        {
+            _ = await _context.NvThietbithuocdds.AddAsync(item);
+            _ = await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 }
