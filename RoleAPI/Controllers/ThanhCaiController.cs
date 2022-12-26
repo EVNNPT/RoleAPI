@@ -1,0 +1,61 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RoleDatas.DBModels;
+using RoleServices;
+
+namespace RoleAPI.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class ThanhCaiController : ControllerBase
+    {
+        private readonly ILogger<ThanhCaiController> _logger;
+        private readonly RoleContext _context;
+        private readonly IThanhCaiServices _thanhCaiServices;
+
+        public ThanhCaiController(ILogger<ThanhCaiController> logger, RoleContext context, IThanhCaiServices thanhCaiServices)
+        {
+            _logger = logger;
+            _context = context;
+            _thanhCaiServices = thanhCaiServices;
+        }
+
+        [AllowAnonymous]
+        [HttpGet("get-ds-tc")]
+        public async Task<IActionResult> GetDSThanhCai()
+        {
+            var rets = await _thanhCaiServices.GetDSThanhCai();
+            return Ok(rets);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("get-detail-tc")]
+        public async Task<IActionResult> GetDetailThanhCai(string MaPMIS)
+        {
+            var ret = await _thanhCaiServices.GetDetailThanhCai(MaPMIS);
+            return Ok(ret);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("add-tc")]
+        public async Task<ActionResult> AddThanhCai(NvThanhcai item)
+        {
+            await _thanhCaiServices.AddThanhCai(item);
+            return Ok(new
+            {
+                message = "Thêm mới thông tin 'Thanh cái' thành công.'",
+            });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("update-tc")]
+        public async Task<ActionResult> UpdateThanhCai(NvThanhcai item)
+        {
+            await _thanhCaiServices.UpdateThanhCai(item);
+            return Ok(new
+            {
+                message = "Cập nhật thông tin 'Thanh cái' thành công.'",
+            });
+        }
+    }
+}

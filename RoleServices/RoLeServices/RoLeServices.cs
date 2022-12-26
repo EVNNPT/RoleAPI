@@ -1,36 +1,36 @@
-﻿using RoleDatas.DBModels;
+using RoleDatas.DBModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace RoleServices;
-public class DuongDayServices : IDuongDayServices
+public class RoLeServices : IRoLeServices
 {
     private readonly RoleContext _context;
 
-    public DuongDayServices(
+    public RoLeServices(
         RoleContext context)
     {
         _context = context;
     }
 
-    public async Task<List<NvDuongday>> GetDSDuongDay()
+    public async Task<List<NvRole>> GetDSRoLe()
     {
-        var rets = new List<NvDuongday>();
-        rets = await _context.NvDuongdays.ToListAsync();
+        var rets = new List<NvRole>();
+        rets = await _context.NvRoles.ToListAsync();
         return rets;
     }
 
-    public async Task<NvDuongday> GetDetailDuongDay(string MaPMIS)
+    public async Task<NvRole> GetDetailRoLe(string MaPMIS)
     {
-        var rets = new NvDuongday();
-        rets = await _context.NvDuongdays.Where(it => it.Mapmis == MaPMIS).FirstOrDefaultAsync();
+        var rets = new NvRole();
+        rets = await _context.NvRoles.Where(it => it.Mapmis == MaPMIS).FirstOrDefaultAsync();
         return rets;
     }
 
-    public async Task AddDuongDay(NvDuongday item)
+    public async Task AddRoLe(NvRole item)
     {
         try
         {
-            _ = await _context.NvDuongdays.AddAsync(item);
+            _ = await _context.NvRoles.AddAsync(item);
             _ = await _context.SaveChangesAsync();
         }
         catch (Exception ex)
@@ -39,29 +39,30 @@ public class DuongDayServices : IDuongDayServices
         }
     }
 
-    public async Task UpdateDuongDay(NvDuongday item)
+    public async Task UpdateRoLe(NvRole item)
     {
-        var ret = await _context.NvDuongdays.Where(it => it.Mapmis == item.Mapmis).FirstOrDefaultAsync();
+        var ret = await _context.NvRoles.Where(it => it.Mapmis == item.Mapmis).FirstOrDefaultAsync();
         if (ret == null)
         {
             throw new KeyNotFoundException($"Không tìm thấy bản ghi với Id = {item.Mapmis}");
         }
-        ret.Tenduongday = item.Tenduongday;
         ret.Madvql = item.Madvql;
         ret.Tencongty = item.Tencongty;
         ret.Truyentaidien = item.Truyentaidien;
-        ret.Capda = item.Capda;
+        ret.Tenrole = item.Tenrole;
         ret.Sohieu = item.Sohieu;
         ret.Sohuu = item.Sohuu;
         ret.Ngaylapdat = item.Ngaylapdat;
         ret.Ngayvh = item.Ngayvh;
-        ret.Tutram = item.Tutram;
-        ret.Tentutram = item.Tentutram;
-        ret.Dentram = item.Dentram;
-        ret.Tendentram = item.Tendentram;
+        ret.Thuoctram = item.Thuoctram;
+        ret.Tentram = item.Tentram;
+        ret.Hangsx = item.Hangsx;
+        ret.Soserial = item.Soserial;
         ret.Sohieubanve = item.Sohieubanve;
         ret.Sododanhso = item.Sododanhso;
         ret.Mach = item.Mach;
+        ret.Tbbaove = item.Tbbaove;
+        ret.Tubv = item.Tubv;
         ret.Cottenhienthi = item.Cottenhienthi;
         ret.Dahienthitrensd = item.Dahienthitrensd;
         ret.Hienthiten = item.Hienthiten;

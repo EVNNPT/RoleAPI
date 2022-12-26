@@ -1,36 +1,36 @@
-﻿using RoleDatas.DBModels;
+using RoleDatas.DBModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace RoleServices;
-public class DuongDayServices : IDuongDayServices
+public class ThanhCaiServices : IThanhCaiServices
 {
     private readonly RoleContext _context;
 
-    public DuongDayServices(
+    public ThanhCaiServices(
         RoleContext context)
     {
         _context = context;
     }
 
-    public async Task<List<NvDuongday>> GetDSDuongDay()
+    public async Task<List<NvThanhcai>> GetDSThanhCai()
     {
-        var rets = new List<NvDuongday>();
-        rets = await _context.NvDuongdays.ToListAsync();
+        var rets = new List<NvThanhcai>();
+        rets = await _context.NvThanhcais.ToListAsync();
         return rets;
     }
 
-    public async Task<NvDuongday> GetDetailDuongDay(string MaPMIS)
+    public async Task<NvThanhcai> GetDetailThanhCai(string MaPMIS)
     {
-        var rets = new NvDuongday();
-        rets = await _context.NvDuongdays.Where(it => it.Mapmis == MaPMIS).FirstOrDefaultAsync();
+        var rets = new NvThanhcai();
+        rets = await _context.NvThanhcais.Where(it => it.Mapmis == MaPMIS).FirstOrDefaultAsync();
         return rets;
     }
 
-    public async Task AddDuongDay(NvDuongday item)
+    public async Task AddThanhCai(NvThanhcai item)
     {
         try
         {
-            _ = await _context.NvDuongdays.AddAsync(item);
+            _ = await _context.NvThanhcais.AddAsync(item);
             _ = await _context.SaveChangesAsync();
         }
         catch (Exception ex)
@@ -39,14 +39,14 @@ public class DuongDayServices : IDuongDayServices
         }
     }
 
-    public async Task UpdateDuongDay(NvDuongday item)
+    public async Task UpdateThanhCai(NvThanhcai item)
     {
-        var ret = await _context.NvDuongdays.Where(it => it.Mapmis == item.Mapmis).FirstOrDefaultAsync();
+        var ret = await _context.NvThanhcais.Where(it => it.Mapmis == item.Mapmis).FirstOrDefaultAsync();
         if (ret == null)
         {
             throw new KeyNotFoundException($"Không tìm thấy bản ghi với Id = {item.Mapmis}");
         }
-        ret.Tenduongday = item.Tenduongday;
+        ret.Tenthanhcai = item.Tenthanhcai;
         ret.Madvql = item.Madvql;
         ret.Tencongty = item.Tencongty;
         ret.Truyentaidien = item.Truyentaidien;
@@ -55,13 +55,10 @@ public class DuongDayServices : IDuongDayServices
         ret.Sohuu = item.Sohuu;
         ret.Ngaylapdat = item.Ngaylapdat;
         ret.Ngayvh = item.Ngayvh;
-        ret.Tutram = item.Tutram;
-        ret.Tentutram = item.Tentutram;
-        ret.Dentram = item.Dentram;
-        ret.Tendentram = item.Tendentram;
+        ret.Thuoctram = item.Thuoctram;
+        ret.Tentram = item.Tentram;
         ret.Sohieubanve = item.Sohieubanve;
         ret.Sododanhso = item.Sododanhso;
-        ret.Mach = item.Mach;
         ret.Cottenhienthi = item.Cottenhienthi;
         ret.Dahienthitrensd = item.Dahienthitrensd;
         ret.Hienthiten = item.Hienthiten;
@@ -69,8 +66,6 @@ public class DuongDayServices : IDuongDayServices
         ret.Tthientai = item.Tthientai;
         ret.Maudong = item.Maudong;
         ret.Maucat = item.Maucat;
-        ret.Daunoidau = item.Daunoidau;
-        ret.Daunoicuoi = item.Daunoicuoi;
         ret.Ghichu = item.Ghichu;
         _ = await _context.SaveChangesAsync();
     }
