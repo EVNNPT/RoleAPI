@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RoleDatas.DBModels;
 using RoleServices;
+using RoleServices.DiagramServices;
 
 var builder = WebApplication.CreateBuilder(args);
 string _myPolicyCors = "_myPolicyCors";
@@ -11,6 +12,7 @@ builder.Services.AddScoped<IDuongDayServices, DuongDayServices>();
 builder.Services.AddScoped<IRoLeServices, RoLeServices>();
 builder.Services.AddScoped<IMayBienApServices, MayBienApServices>();
 builder.Services.AddScoped<IThanhCaiServices, ThanhCaiServices>();
+builder.Services.AddScoped<IDiagramServices, DiagramServices>();
 
 // Add services to the container.
 builder.Services.AddControllers();
