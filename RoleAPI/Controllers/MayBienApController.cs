@@ -40,22 +40,46 @@ namespace RoleAPI.Controllers
         [HttpPost("add-mba")]
         public async Task<ActionResult> AddMayBienAp(NvMaybienap item)
         {
-            await _mayBienApServices.AddMayBienAp(item);
-            return Ok(new
+            try
             {
-                message = "Thêm mới thông tin 'Máy biến áp' thành công.'",
-            });
+                await _mayBienApServices.AddMayBienAp(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Thêm mới thông tin 'Máy biến áp' thành công.'",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
         }
 
         [AllowAnonymous]
         [HttpPost("update-mba")]
         public async Task<ActionResult> UpdateMayBienAp(NvMaybienap item)
         {
-            await _mayBienApServices.UpdateMayBienAp(item);
-            return Ok(new
+            try
             {
-                message = "Cập nhật thông tin 'Máy biến áp' thành công.'",
-            });
+                await _mayBienApServices.UpdateMayBienAp(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Cập nhật thông tin 'Máy biến áp' thành công.'",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
         }
     }
 }

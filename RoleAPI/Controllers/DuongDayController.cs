@@ -40,22 +40,46 @@ namespace RoleAPI.Controllers
         [HttpPost("add-dd")]
         public async Task<ActionResult> AddDuongDay(NvDuongday item)
         {
-            await _duongDayServices.AddDuongDay(item);
-            return Ok(new
+            try
             {
-                message = "Thêm mới thông tin 'Đường dây' thành công.'",
-            });
+                await _duongDayServices.AddDuongDay(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Thêm mới thông tin 'Đường dây' thành công.'",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
         }
 
         [AllowAnonymous]
         [HttpPost("update-dd")]
         public async Task<ActionResult> UpdateDuongDay(NvDuongday item)
         {
-            await _duongDayServices.UpdateDuongDay(item);
-            return Ok(new
+            try
             {
-                message = "Cập nhật thông tin 'Đường dây' thành công.'",
-            });
+                await _duongDayServices.UpdateDuongDay(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Cập nhật thông tin 'Đường dây' thành công.'",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
         }
     }
 }
