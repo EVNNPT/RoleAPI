@@ -40,22 +40,46 @@ namespace RoleAPI.Controllers
         [HttpPost("add-rl")]
         public async Task<ActionResult> AddRoLe(NvRole item)
         {
-            await _roLeServices.AddRoLe(item);
-            return Ok(new
+            try
             {
-                message = "Thêm mới thông tin 'Rơ le' thành công.'",
-            });
+                await _roLeServices.AddRoLe(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Thêm mới thông tin 'Rơ le' thành công.'",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
         }
 
         [AllowAnonymous]
         [HttpPost("update-rl")]
         public async Task<ActionResult> UpdateRoLe(NvRole item)
         {
-            await _roLeServices.UpdateRoLe(item);
-            return Ok(new
+            try
             {
-                message = "Cập nhật thông tin 'Rơ le' thành công.'",
-            });
+                await _roLeServices.UpdateRoLe(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Cập nhật thông tin 'Rơ le' thành công.'",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
         }
     }
 }

@@ -40,22 +40,46 @@ namespace RoleAPI.Controllers
         [HttpPost("add-tc")]
         public async Task<ActionResult> AddThanhCai(NvThanhcai item)
         {
-            await _thanhCaiServices.AddThanhCai(item);
-            return Ok(new
+            try
             {
-                message = "Thêm mới thông tin 'Thanh cái' thành công.'",
-            });
+                await _thanhCaiServices.AddThanhCai(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Thêm mới thông tin 'Thanh cái' thành công.'",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
         }
 
         [AllowAnonymous]
         [HttpPost("update-tc")]
         public async Task<ActionResult> UpdateThanhCai(NvThanhcai item)
         {
-            await _thanhCaiServices.UpdateThanhCai(item);
-            return Ok(new
+            try
             {
-                message = "Cập nhật thông tin 'Thanh cái' thành công.'",
-            });
+                await _thanhCaiServices.UpdateThanhCai(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Cập nhật thông tin 'Thanh cái' thành công.'",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
         }
     }
 }
