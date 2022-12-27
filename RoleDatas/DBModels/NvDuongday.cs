@@ -60,6 +60,4 @@ public partial class NvDuongday
     public string? Daunoicuoi { get; set; }
 
     public string? Ghichu { get; set; }
-
-    public virtual ICollection<NvThietbithuocdd> NvThietbithuocdds { get; } = new List<NvThietbithuocdd>();
 }

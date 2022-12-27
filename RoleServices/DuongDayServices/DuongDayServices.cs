@@ -89,11 +89,11 @@ public class DuongDayServices : IDuongDayServices
         var query1 = from a in _context.NvThietbithuocdds
                      join b in _context.NvMaybienaps
                      on a.Matbkhac equals b.Mapmis
-                     where a.Maduongday == MaDuongDay
+                     where a.Maduongday == MaDuongDay && a.Loaitbkhac == "MayBienAp"
                      select new DTLienQuanModel
                      {
                          Maduongday = a.Maduongday,
-                         Loaitbkhac = "MBA",
+                         Loaitbkhac = "MayBienAp",
                          Matbkhac = b.Mapmis,
                          Tenthietbi = b.Tenmba
                      };
@@ -101,11 +101,11 @@ public class DuongDayServices : IDuongDayServices
         var query2 = from a in _context.NvThietbithuocdds
                      join b in _context.NvRoles
                      on a.Matbkhac equals b.Mapmis
-                     where a.Maduongday == MaDuongDay
+                     where a.Maduongday == MaDuongDay && a.Loaitbkhac == "RoLe"
                      select new DTLienQuanModel
                      {
                          Maduongday = a.Maduongday,
-                         Loaitbkhac = "ROLE",
+                         Loaitbkhac = "RoLe",
                          Matbkhac = b.Mapmis,
                          Tenthietbi = b.Tenrole
                      };

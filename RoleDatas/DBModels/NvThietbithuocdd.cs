@@ -10,6 +10,4 @@ public partial class NvThietbithuocdd
     public string Matbkhac { get; set; } = null!;
 
     public string? Loaitbkhac { get; set; }
-
-    public virtual NvDuongday MaduongdayNavigation { get; set; } = null!;
 }

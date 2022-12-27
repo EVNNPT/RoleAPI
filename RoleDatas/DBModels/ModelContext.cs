@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RoleDatas.DBModels;
 
-public partial class RoleContext : DbContext
+public partial class ModelContext : DbContext
 {
-    public RoleContext()
+    public ModelContext()
     {
     }
 
-    public RoleContext(DbContextOptions<RoleContext> options)
+    public ModelContext(DbContextOptions<ModelContext> options)
         : base(options)
     {
     }
@@ -27,13 +27,15 @@ public partial class RoleContext : DbContext
 
     public virtual DbSet<NvRole> NvRoles { get; set; }
 
+    public virtual DbSet<NvText> NvTexts { get; set; }
+
     public virtual DbSet<NvThanhcai> NvThanhcais { get; set; }
 
     public virtual DbSet<NvThietbithuocdd> NvThietbithuocdds { get; set; }
 
-    //     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-    //         => optionsBuilder.UseOracle("User Id=sodo1soi;Password=12345;Data Source=10.1.1.21:1521/FTILIS;");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseOracle("User Id=sodo1soi;Password=12345;Data Source=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.1.1.21)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = FTILIS) ));");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -458,6 +460,41 @@ public partial class RoleContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("TUBV");
+        });
+
+        modelBuilder.Entity<NvText>(entity =>
+        {
+            entity.HasKey(e => e.Ma);
+
+            entity.ToTable("NV_TEXT");
+
+            entity.Property(e => e.Ma)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("MA");
+            entity.Property(e => e.Jsongeo)
+                .HasColumnType("CLOB")
+                .HasColumnName("JSONGEO");
+            entity.Property(e => e.Madvql)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("MADVQL");
+            entity.Property(e => e.Sohieubanve)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("SOHIEUBANVE");
+            entity.Property(e => e.Tencongty)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("TENCONGTY");
+            entity.Property(e => e.Texthienthi)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("TEXTHIENTHI");
+            entity.Property(e => e.Truyentaidien)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("TRUYENTAIDIEN");
         });
 
         modelBuilder.Entity<NvThanhcai>(entity =>
