@@ -11,4 +11,5 @@ public interface IDuongDayServices
     Task<List<NvFiledinhkem>> GetFileDinhKem(string MaLoaiThietBi, string MaDT);
     Task<List<DTLienQuanModel>> GetDTLienQuan(string MaDuongDay);
     Task AddDTLienQuan(NvThietbithuocdd item);
+    Task DeleteDTLienQuan(NvThietbithuocdd item);
 }

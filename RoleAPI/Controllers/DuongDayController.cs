@@ -120,5 +120,28 @@ namespace RoleAPI.Controllers
                 });
             }
         }
+
+        [AllowAnonymous]
+        [HttpPost("delete-dt-lien-quan")]
+        public async Task<IActionResult> DeleteDTLienQuan(NvThietbithuocdd item)
+        {
+            try
+            {
+                await _duongDayServices.DeleteDTLienQuan(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Xóa đối tượng liên quan thành công.",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
+        }
     }
 }

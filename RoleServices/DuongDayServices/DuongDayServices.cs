@@ -133,4 +133,17 @@ public class DuongDayServices : IDuongDayServices
             throw new Exception(ex.Message);
         }
     }
+
+    public async Task DeleteDTLienQuan(NvThietbithuocdd item)
+    {
+        try
+        {
+            _context.NvThietbithuocdds.Remove(item);
+            _ = await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
 }
