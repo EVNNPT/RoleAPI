@@ -83,6 +83,29 @@ namespace RoleAPI.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost("delete-dd")]
+        public async Task<ActionResult> DeleteDuongDay(NvDuongday item)
+        {
+            try
+            {
+                await _duongDayServices.DeleteDuongDay(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Xóa thông tin 'Đường dây' thành công.",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
+        }
+
+        [AllowAnonymous]
         [HttpGet("get-file-dinh-kem-dd")]
         public async Task<IActionResult> GetFileDinhKem(string MaLoaiThietBi, string MaDT)
         {

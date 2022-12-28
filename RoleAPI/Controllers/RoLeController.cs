@@ -83,6 +83,29 @@ namespace RoleAPI.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost("delete-rl")]
+        public async Task<ActionResult> DeleteRoLe(NvRole item)
+        {
+            try
+            {
+                await _roLeServices.DeleteRoLe(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Xóa thông tin 'Rơ le' thành công.",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
+        }
+
+        [AllowAnonymous]
         [HttpGet("get-file-dinh-kem-rl")]
         public async Task<IActionResult> GetFileDinhKem(string MaLoaiThietBi, string MaDT)
         {

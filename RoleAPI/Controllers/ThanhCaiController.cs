@@ -83,6 +83,29 @@ namespace RoleAPI.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost("delete-tc")]
+        public async Task<ActionResult> DeleteThanhCai(NvThanhcai item)
+        {
+            try
+            {
+                await _thanhCaiServices.DeleteThanhCai(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Xóa thông tin 'Thanh cái' thành công.",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
+        }
+
+        [AllowAnonymous]
         [HttpGet("get-file-dinh-kem-tc")]
         public async Task<IActionResult> GetFileDinhKem(string MaLoaiThietBi, string MaDT)
         {

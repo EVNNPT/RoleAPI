@@ -73,6 +73,19 @@ public class MayBienApServices : IMayBienApServices
         _ = await _context.SaveChangesAsync();
     }
 
+    public async Task DeleteMayBienAp(NvMaybienap item)
+    {
+        try
+        {
+            _context.NvMaybienaps.Remove(item);
+            _ = await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+
     public async Task<List<NvFiledinhkem>> GetFileDinhKem(string MaLoaiThietBi, string MaDT)
     {
         var rets = new List<NvFiledinhkem>();

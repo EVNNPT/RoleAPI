@@ -83,6 +83,29 @@ namespace RoleAPI.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost("delete-mba")]
+        public async Task<ActionResult> DeleteMayBienAp(NvMaybienap item)
+        {
+            try
+            {
+                await _mayBienApServices.DeleteMayBienAp(item);
+                return Ok(new
+                {
+                    fail = false,
+                    message = "Xóa thông tin 'Máy biến áp' thành công.",
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    fail = true,
+                    message = ex.Message,
+                });
+            }
+        }
+
+        [AllowAnonymous]
         [HttpGet("get-file-dinh-kem-mba")]
         public async Task<IActionResult> GetFileDinhKem(string MaLoaiThietBi, string MaDT)
         {
