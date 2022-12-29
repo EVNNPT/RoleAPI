@@ -80,7 +80,7 @@ public class DiagramServices : IDiagramServices
                 // geoJson.properties = new Properties();
                 // Set Properties:
                 // Color theo trạng thái hoạt động
-                if (nVMayBienAp.Hoatdong == "Y")
+                if (nVMayBienAp.Tthientai == "Đóng")
                 {
                     geoJson.properties!.color = nVMayBienAp.Maudong;
                 }
@@ -116,7 +116,7 @@ public class DiagramServices : IDiagramServices
                 // geoJson.properties = new Properties();
                 // Set Properties:
                 // Color theo trạng thái hoạt động
-                if (nVThanhCai.Hoatdong == "Y")
+                if (nVThanhCai.Tthientai == "Đóng")
                 {
                     geoJson.properties!.color = nVThanhCai.Maudong;
                 }
@@ -152,7 +152,7 @@ public class DiagramServices : IDiagramServices
                 // geoJson.properties = new Properties();
                 // Set Properties:
                 // Color theo trạng thái hoạt động
-                if (nVRole.Hoatdong == "Y")
+                if (nVRole.Tthientai == "Đóng")
                 {
                     geoJson.properties!.color = nVRole.Maudong;
                 }
