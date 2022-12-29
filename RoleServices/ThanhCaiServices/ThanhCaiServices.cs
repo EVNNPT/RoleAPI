@@ -15,7 +15,7 @@ public class ThanhCaiServices : IThanhCaiServices
     public async Task<List<NvThanhcai>> GetDSThanhCai()
     {
         var rets = new List<NvThanhcai>();
-        rets = await _context.NvThanhcais.ToListAsync();
+        rets = await _context.NvThanhcais.OrderBy(it => it.Tenthanhcai).ToListAsync();
         return rets;
     }
 

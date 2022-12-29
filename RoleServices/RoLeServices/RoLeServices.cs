@@ -15,7 +15,7 @@ public class RoLeServices : IRoLeServices
     public async Task<List<NvRole>> GetDSRoLe()
     {
         var rets = new List<NvRole>();
-        rets = await _context.NvRoles.ToListAsync();
+        rets = await _context.NvRoles.OrderBy(it => it.Tenrole).ToListAsync();
         return rets;
     }
 
@@ -73,6 +73,39 @@ public class RoLeServices : IRoLeServices
         ret.Daunoidau = item.Daunoidau;
         ret.Daunoicuoi = item.Daunoicuoi;
         ret.Ghichu = item.Ghichu;
+
+        var getDSDDs = await _context.NvThietbithuocdds.Where(it => it.Matbkhac == item.Mapmis && it.Loaitbkhac == "RoLe").ToListAsync();
+        for (var i = 0; i < getDSDDs.Count; i++)
+        {
+            var getDD = await _context.NvDuongdays.Where(it => it.Mapmis == getDSDDs[i].Maduongday).FirstOrDefaultAsync();
+            if (getDD != null)
+            {
+                getDD.Tthientai = item.Tthientai;
+            }
+            var getDSTBs = await _context.NvThietbithuocdds.Where(it => it.Maduongday == getDSDDs[i].Maduongday).ToListAsync();
+            for (var j = 0; j < getDSTBs.Count; j++)
+            {
+                switch (getDSTBs[j].Loaitbkhac)
+                {
+                    case "ThanhCai":
+                        var tc = await _context.NvThanhcais.Where(it => it.Mapmis == getDSTBs[j].Matbkhac).FirstOrDefaultAsync();
+                        if (tc != null)
+                        {
+                            tc.Tthientai = item.Tthientai;
+                        }
+                        break;
+                    case "MayBienAp":
+                        var mba = await _context.NvMaybienaps.Where(it => it.Mapmis == getDSTBs[j].Matbkhac).FirstOrDefaultAsync();
+                        if (mba != null)
+                        {
+                            mba.Tthientai = item.Tthientai;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
         _ = await _context.SaveChangesAsync();
     }
 

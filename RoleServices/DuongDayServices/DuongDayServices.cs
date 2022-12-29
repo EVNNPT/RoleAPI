@@ -16,7 +16,7 @@ public class DuongDayServices : IDuongDayServices
     public async Task<List<NvDuongday>> GetDSDuongDay()
     {
         var rets = new List<NvDuongday>();
-        rets = await _context.NvDuongdays.ToListAsync();
+        rets = await _context.NvDuongdays.OrderBy(it => it.Tenduongday).ToListAsync();
         return rets;
     }
 
@@ -123,11 +123,27 @@ public class DuongDayServices : IDuongDayServices
                          Tenthietbi = b.Tenrole
                      };
         var results2 = await query2.ToListAsync();
+        var query3 = from a in _context.NvThietbithuocdds
+                     join b in _context.NvThanhcais
+                     on a.Matbkhac equals b.Mapmis
+                     where a.Maduongday == MaDuongDay && a.Loaitbkhac == "ThanhCai"
+                     select new DTLienQuanModel
+                     {
+                         Maduongday = a.Maduongday,
+                         Loaitbkhac = "ThanhCai",
+                         Matbkhac = b.Mapmis,
+                         Tenthietbi = b.Tenthanhcai
+                     };
+        var results3 = await query3.ToListAsync();
         foreach (var item in results1)
         {
             rets.Add(item);
         }
         foreach (var item in results2)
+        {
+            rets.Add(item);
+        }
+        foreach (var item in results3)
         {
             rets.Add(item);
         }
