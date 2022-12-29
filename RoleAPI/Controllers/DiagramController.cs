@@ -26,4 +26,12 @@ public class DiagramController : ControllerBase
         var ret = await _diagramServices.GetDiagram(id);
         return Ok(ret);
     }
+
+    [AllowAnonymous]
+    [HttpPost("add-or-update-role")]
+    public async Task<IActionResult> AddOrUpdateRole(CreateOrUpdateFeature requestData)
+    {
+        var ret = await _diagramServices.AddOrUpdateFeature(requestData);
+        return Ok(new { id = ret });
+    }
 }

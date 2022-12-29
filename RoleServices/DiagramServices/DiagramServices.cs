@@ -169,4 +169,45 @@ public class DiagramServices : IDiagramServices
         }
     }
 
+    public async Task<string> AddOrUpdateFeature(CreateOrUpdateFeature createOrUpdateFeature)
+    {
+        switch (createOrUpdateFeature.featureType)
+        {
+            // case FeatureType.DuongDay:
+            //     break;
+            case FeatureType.Role:
+                return await AddOrUpdateRole(createOrUpdateFeature);
+            // case FeatureType.MayBienAp:
+            //     break;
+            // case FeatureType.ThanhCai:
+            //     break;
+            default:
+                return "";
+        }
+    }
+
+    private async Task<string> AddOrUpdateRole(CreateOrUpdateFeature createOrUpdateFeature)
+    {
+        NvRole role;
+        if (string.IsNullOrEmpty(createOrUpdateFeature.id))
+        {
+            // Thêm mới
+            role = new NvRole();
+            role.Mapmis = Guid.NewGuid().ToString();
+            createOrUpdateFeature.id = role.Mapmis;
+            role.Tthientai = "Đóng";
+            role.Maudong = "#ff0000";
+            role.Maucat = "#0000ff";
+            role.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature.getObject, Formatting.Indented);
+            await _context.NvRoles.AddAsync(role);
+        }
+        else
+        {
+            // Cập nhật
+            role = await _context.NvRoles.Where(r => r.Mapmis == createOrUpdateFeature.id).FirstAsync();
+            role.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature.getObject, Formatting.Indented);
+        }
+        await _context.SaveChangesAsync();
+        return role.Mapmis;
+    }
 }
