@@ -16,7 +16,7 @@ public class DuongDayServices : IDuongDayServices
     public async Task<List<NvDuongday>> GetDSDuongDay()
     {
         var rets = new List<NvDuongday>();
-        rets = await _context.NvDuongdays.ToListAsync();
+        rets = await _context.NvDuongdays.OrderBy(it => it.Tenduongday).ToListAsync();
         return rets;
     }
 

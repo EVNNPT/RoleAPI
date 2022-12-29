@@ -15,7 +15,7 @@ public class RoLeServices : IRoLeServices
     public async Task<List<NvRole>> GetDSRoLe()
     {
         var rets = new List<NvRole>();
-        rets = await _context.NvRoles.ToListAsync();
+        rets = await _context.NvRoles.OrderBy(it => it.Tenrole).ToListAsync();
         return rets;
     }
 

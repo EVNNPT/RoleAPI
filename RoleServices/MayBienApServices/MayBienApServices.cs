@@ -15,7 +15,7 @@ public class MayBienApServices : IMayBienApServices
     public async Task<List<NvMaybienap>> GetDSMayBienAp()
     {
         var rets = new List<NvMaybienap>();
-        rets = await _context.NvMaybienaps.ToListAsync();
+        rets = await _context.NvMaybienaps.OrderBy(it => it.Tenmba).ToListAsync();
         return rets;
     }
 

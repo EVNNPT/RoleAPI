@@ -13,6 +13,7 @@ builder.Services.AddScoped<IRoLeServices, RoLeServices>();
 builder.Services.AddScoped<IMayBienApServices, MayBienApServices>();
 builder.Services.AddScoped<IThanhCaiServices, ThanhCaiServices>();
 builder.Services.AddScoped<IDiagramServices, DiagramServices>();
+builder.Services.AddScoped<IDashboardServices, DashboardServices>();
 
 // Add services to the container.
 builder.Services.AddControllers();
