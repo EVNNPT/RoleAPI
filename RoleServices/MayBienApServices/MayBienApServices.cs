@@ -73,10 +73,15 @@ public class MayBienApServices : IMayBienApServices
         _ = await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteMayBienAp(NvMaybienap item)
+    public async Task DeleteMayBienAp(string id)
     {
         try
         {
+            var item = await _context.NvMaybienaps.Where(it => it.Mapmis == id).FirstOrDefaultAsync();
+            if (item == null)
+            {
+                throw new KeyNotFoundException($"Không tìm thấy bản ghi với Id = {id}");
+            }
             _context.NvMaybienaps.Remove(item);
             _ = await _context.SaveChangesAsync();
         }

@@ -109,10 +109,15 @@ public class RoLeServices : IRoLeServices
         _ = await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteRoLe(NvRole item)
+    public async Task DeleteRoLe(string id)
     {
         try
         {
+            var item = await _context.NvRoles.Where(it => it.Mapmis == id).FirstOrDefaultAsync();
+            if (item == null)
+            {
+                throw new KeyNotFoundException($"Không tìm thấy bản ghi với Id = {id}");
+            }
             _context.NvRoles.Remove(item);
             _ = await _context.SaveChangesAsync();
         }

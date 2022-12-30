@@ -7,6 +7,6 @@ public interface IRoLeServices
     Task<NvRole> GetDetailRoLe(string MaPMIS);
     Task AddRoLe(NvRole item);
     Task UpdateRoLe(NvRole item);
-    Task DeleteRoLe(NvRole item);
+    Task DeleteRoLe(string id);
     Task<List<NvFiledinhkem>> GetFileDinhKem(string MaLoaiThietBi, string MaDT);
 }

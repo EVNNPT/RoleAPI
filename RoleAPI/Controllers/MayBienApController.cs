@@ -83,12 +83,12 @@ namespace RoleAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("delete-mba")]
-        public async Task<ActionResult> DeleteMayBienAp(NvMaybienap item)
+        [HttpGet("delete-mba")]
+        public async Task<ActionResult> DeleteMayBienAp(string id)
         {
             try
             {
-                await _mayBienApServices.DeleteMayBienAp(item);
+                await _mayBienApServices.DeleteMayBienAp(id);
                 return Ok(new
                 {
                     fail = false,

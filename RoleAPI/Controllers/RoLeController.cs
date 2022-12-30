@@ -83,12 +83,12 @@ namespace RoleAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("delete-rl")]
-        public async Task<ActionResult> DeleteRoLe(NvRole item)
+        [HttpGet("delete-rl")]
+        public async Task<ActionResult> DeleteRoLe(string id)
         {
             try
             {
-                await _roLeServices.DeleteRoLe(item);
+                await _roLeServices.DeleteRoLe(id);
                 return Ok(new
                 {
                     fail = false,

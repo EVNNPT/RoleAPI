@@ -83,12 +83,12 @@ namespace RoleAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("delete-tc")]
-        public async Task<ActionResult> DeleteThanhCai(NvThanhcai item)
+        [HttpGet("delete-tc")]
+        public async Task<ActionResult> DeleteThanhCai(string id)
         {
             try
             {
-                await _thanhCaiServices.DeleteThanhCai(item);
+                await _thanhCaiServices.DeleteThanhCai(id);
                 return Ok(new
                 {
                     fail = false,

@@ -76,10 +76,15 @@ public class DuongDayServices : IDuongDayServices
         _ = await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteDuongDay(NvDuongday item)
+    public async Task DeleteDuongDay(string id)
     {
         try
         {
+            var item = await _context.NvDuongdays.Where(it => it.Mapmis == id).FirstOrDefaultAsync();
+            if (item == null)
+            {
+                throw new KeyNotFoundException($"Không tìm thấy bản ghi với Id = {id}");
+            }
             _context.NvDuongdays.Remove(item);
             _ = await _context.SaveChangesAsync();
         }

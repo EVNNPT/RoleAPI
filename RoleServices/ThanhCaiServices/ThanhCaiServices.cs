@@ -70,10 +70,15 @@ public class ThanhCaiServices : IThanhCaiServices
         _ = await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteThanhCai(NvThanhcai item)
+    public async Task DeleteThanhCai(string id)
     {
         try
         {
+            var item = await _context.NvThanhcais.Where(it => it.Mapmis == id).FirstOrDefaultAsync();
+            if (item == null)
+            {
+                throw new KeyNotFoundException($"Không tìm thấy bản ghi với Id = {id}");
+            }
             _context.NvThanhcais.Remove(item);
             _ = await _context.SaveChangesAsync();
         }
