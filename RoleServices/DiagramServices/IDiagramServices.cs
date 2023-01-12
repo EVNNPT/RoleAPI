@@ -7,4 +7,5 @@ public interface IDiagramServices
 {
     Task<DiagramModel> GetDiagram(string id);
     Task<string> AddOrUpdateFeature(CreateOrUpdateFeature createOrUpdateFeature);
+    Task<string> DeleteFeature(CreateOrUpdateFeature createOrUpdateFeature);
 }

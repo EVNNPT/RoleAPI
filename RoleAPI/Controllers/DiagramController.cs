@@ -28,10 +28,18 @@ public class DiagramController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpPost("add-or-update-role")]
-    public async Task<IActionResult> AddOrUpdateRole(CreateOrUpdateFeature requestData)
+    [HttpPost("add-or-update-feature")]
+    public async Task<IActionResult> AddOrUpdateFeature(CreateOrUpdateFeature requestData)
     {
         var ret = await _diagramServices.AddOrUpdateFeature(requestData);
+        return Ok(new { id = ret });
+    }
+
+    [AllowAnonymous]
+    [HttpPost("delete-feature")]
+    public async Task<IActionResult> DeleteFeature(CreateOrUpdateFeature requestData)
+    {
+        var ret = await _diagramServices.DeleteFeature(requestData);
         return Ok(new { id = ret });
     }
 }

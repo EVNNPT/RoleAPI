@@ -4,13 +4,13 @@ public class DiagramModel
 {
     public DiagramModel()
     {
-        Roles = new List<GeoJson>();
-        ThanhCais = new List<GeoJson>();
-        MayBienAps = new List<GeoJson>();
-        DuongDays = new List<GeoJson>();
+        Roles = new List<CreateOrUpdateFeature>();
+        ThanhCais = new List<CreateOrUpdateFeature>();
+        MayBienAps = new List<CreateOrUpdateFeature>();
+        DuongDays = new List<CreateOrUpdateFeature>();
     }
-    public List<GeoJson>? Roles { get; set; }
-    public List<GeoJson>? ThanhCais { get; set; }
-    public List<GeoJson>? MayBienAps { get; set; }
-    public List<GeoJson>? DuongDays { get; set; }
+    public List<CreateOrUpdateFeature>? Roles { get; set; }
+    public List<CreateOrUpdateFeature>? ThanhCais { get; set; }
+    public List<CreateOrUpdateFeature>? MayBienAps { get; set; }
+    public List<CreateOrUpdateFeature>? DuongDays { get; set; }
 }

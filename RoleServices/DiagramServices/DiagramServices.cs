@@ -24,123 +24,58 @@ public class DiagramServices : IDiagramServices
         return ret;
     }
 
-    private async Task<List<GeoJson>> GetDuongDays(string diagramId)
+    private async Task<List<CreateOrUpdateFeature>> GetRoles(string diagramId)
     {
-        var ret = new List<GeoJson>();
-        var nVDuongDays = await _context.NvDuongdays.AsNoTracking()
-        .ToListAsync();
-        DuongDayUpdateGeoJson(ret, nVDuongDays);
-        return ret;
-    }
-
-    private void DuongDayUpdateGeoJson(List<GeoJson> geoJsons, List<NvDuongday> nVDuongDays)
-    {
-        foreach (var nVDuongDay in nVDuongDays)
-        {
-            if (!string.IsNullOrEmpty(nVDuongDay.Jsongeo))
-            {
-                var geoJson = JsonConvert.DeserializeObject<GeoJson>(nVDuongDay.Jsongeo)!;
-                geoJson.geometry!.coordinates = JsonConvert.DeserializeObject<List<List<double>>>(geoJson!.geometry!.coordinates!.ToString()!);
-                // geoJson.properties = new Properties();
-                // Set Properties:
-                // Color theo trạng thái hoạt động
-                if (nVDuongDay.Hoatdong == "Y")
-                {
-                    geoJson.properties!.color = nVDuongDay.Maudong;
-                }
-                else
-                {
-                    geoJson.properties!.color = nVDuongDay.Maucat;
-                }
-                // Device Type Name
-                geoJson.properties!.deviceTypeName = "duongDay";
-                // Id
-                geoJson.properties!.id = nVDuongDay.Mapmis;
-                geoJsons.Add(geoJson);
-            }
-        }
-    }
-
-    private async Task<List<GeoJson>> GetMayBienAps(string diagramId)
-    {
-        var ret = new List<GeoJson>();
-        var nVMayBienAps = await _context.NvMaybienaps.AsNoTracking()
-        .ToListAsync();
-        MayBienApUpdateGeoJson(ret, nVMayBienAps);
-        return ret;
-    }
-
-    private void MayBienApUpdateGeoJson(List<GeoJson> geoJsons, List<NvMaybienap> nVMayBienAps)
-    {
-        foreach (var nVMayBienAp in nVMayBienAps)
-        {
-            if (!string.IsNullOrEmpty(nVMayBienAp.Jsongeo))
-            {
-                var geoJson = JsonConvert.DeserializeObject<GeoJson>(nVMayBienAp.Jsongeo)!;
-                // geoJson.properties = new Properties();
-                // Set Properties:
-                // Color theo trạng thái hoạt động
-                if (nVMayBienAp.Tthientai == "Đóng")
-                {
-                    geoJson.properties!.color = nVMayBienAp.Maudong;
-                }
-                else
-                {
-                    geoJson.properties!.color = nVMayBienAp.Maucat;
-                }
-                // Device Type Name
-                geoJson.properties!.deviceTypeName = "mayBienAp";
-                // Id
-                geoJson.properties!.id = nVMayBienAp.Mapmis;
-                geoJsons.Add(geoJson);
-            }
-        }
-    }
-
-    private async Task<List<GeoJson>> GetThanhCais(string diagramId)
-    {
-        var ret = new List<GeoJson>();
-        var nVThanhCais = await _context.NvThanhcais.AsNoTracking()
-        .ToListAsync();
-        ThanhCaiUpdateGeoJson(ret, nVThanhCais);
-        return ret;
-    }
-
-    private void ThanhCaiUpdateGeoJson(List<GeoJson> geoJsons, List<NvThanhcai> nVThanhCais)
-    {
-        foreach (var nVThanhCai in nVThanhCais)
-        {
-            if (!string.IsNullOrEmpty(nVThanhCai.Jsongeo))
-            {
-                var geoJson = JsonConvert.DeserializeObject<GeoJson>(nVThanhCai.Jsongeo)!;
-                // geoJson.properties = new Properties();
-                // Set Properties:
-                // Color theo trạng thái hoạt động
-                if (nVThanhCai.Tthientai == "Đóng")
-                {
-                    geoJson.properties!.color = nVThanhCai.Maudong;
-                }
-                else
-                {
-                    geoJson.properties!.color = nVThanhCai.Maucat;
-                }
-                // Device Type Name
-                geoJson.properties!.deviceTypeName = "thanhCai";
-                // Id
-                geoJson.properties!.id = nVThanhCai.Mapmis;
-                geoJsons.Add(geoJson);
-            }
-        }
-    }
-
-    private async Task<List<GeoJson>> GetRoles(string diagramId)
-    {
-        var ret = new List<GeoJson>();
+        var rets = new List<CreateOrUpdateFeature>();
         var nVRoles = await _context.NvRoles.AsNoTracking()
         .ToListAsync();
-        RoleUpdateGeoJson(ret, nVRoles);
-        return ret;
+        foreach (var role in nVRoles)
+        {
+            if (!string.IsNullOrEmpty(role.Jsongeo))
+                rets.Add(JsonConvert.DeserializeObject<CreateOrUpdateFeature>(role.Jsongeo!));
+        }
+        return rets;
     }
+
+    private async Task<List<CreateOrUpdateFeature>> GetThanhCais(string diagramId)
+    {
+        var rets = new List<CreateOrUpdateFeature>();
+        var nvThanhcais = await _context.NvThanhcais.AsNoTracking()
+        .ToListAsync();
+        foreach (var thanhCai in nvThanhcais)
+        {
+            if (!string.IsNullOrEmpty(thanhCai.Jsongeo))
+                rets.Add(JsonConvert.DeserializeObject<CreateOrUpdateFeature>(thanhCai.Jsongeo));
+        }
+        return rets;
+    }
+
+    private async Task<List<CreateOrUpdateFeature>> GetMayBienAps(string diagramId)
+    {
+        var rets = new List<CreateOrUpdateFeature>();
+        var nvMaybienaps = await _context.NvMaybienaps.AsNoTracking()
+        .ToListAsync();
+        foreach (var mayBienAp in nvMaybienaps)
+        {
+            if (!string.IsNullOrEmpty(mayBienAp.Jsongeo))
+                rets.Add(JsonConvert.DeserializeObject<CreateOrUpdateFeature>(mayBienAp.Jsongeo));
+        }
+        return rets;
+    }
+
+    private async Task<List<CreateOrUpdateFeature>> GetDuongDays(string diagramId)
+    {
+        var rets = new List<CreateOrUpdateFeature>();
+        var nvDuongdays = await _context.NvDuongdays.AsNoTracking()
+        .ToListAsync();
+        foreach (var duongDay in nvDuongdays)
+        {
+            if (!string.IsNullOrEmpty(duongDay.Jsongeo))
+                rets.Add(JsonConvert.DeserializeObject<CreateOrUpdateFeature>(duongDay.Jsongeo));
+        }
+        return rets;
+    }
+
 
     private void RoleUpdateGeoJson(List<GeoJson> geoJsons, List<NvRole> nVRoles)
     {
@@ -173,14 +108,14 @@ public class DiagramServices : IDiagramServices
     {
         switch (createOrUpdateFeature.featureType)
         {
-            // case FeatureType.DuongDay:
-            //     break;
+            case FeatureType.DuongDay:
+                return await AddOrUpdateDuongDay(createOrUpdateFeature);
             case FeatureType.Role:
                 return await AddOrUpdateRole(createOrUpdateFeature);
-            // case FeatureType.MayBienAp:
-            //     break;
-            // case FeatureType.ThanhCai:
-            //     break;
+            case FeatureType.MayBienAp:
+                return await AddOrUpdateMayBienAp(createOrUpdateFeature);
+            case FeatureType.ThanhCai:
+                return await AddOrUpdateThanhCai(createOrUpdateFeature);
             default:
                 return "";
         }
@@ -198,16 +133,118 @@ public class DiagramServices : IDiagramServices
             role.Tthientai = "Đóng";
             role.Maudong = "#ff0000";
             role.Maucat = "#0000ff";
-            role.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature.getObject, Formatting.Indented);
+            role.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature, Formatting.Indented);
             await _context.NvRoles.AddAsync(role);
         }
         else
         {
             // Cập nhật
             role = await _context.NvRoles.Where(r => r.Mapmis == createOrUpdateFeature.id).FirstAsync();
-            role.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature.getObject, Formatting.Indented);
+            role.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature, Formatting.Indented);
         }
         await _context.SaveChangesAsync();
         return role.Mapmis;
+    }
+
+    private async Task<string> AddOrUpdateMayBienAp(CreateOrUpdateFeature createOrUpdateFeature)
+    {
+        NvMaybienap mayBienAp;
+        if (string.IsNullOrEmpty(createOrUpdateFeature.id))
+        {
+            // Thêm mới
+            mayBienAp = new NvMaybienap();
+            mayBienAp.Mapmis = Guid.NewGuid().ToString();
+            createOrUpdateFeature.id = mayBienAp.Mapmis;
+            mayBienAp.Tthientai = "Đóng";
+            mayBienAp.Maudong = "#ff0000";
+            mayBienAp.Maucat = "#0000ff";
+            mayBienAp.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature, Formatting.Indented);
+            await _context.NvMaybienaps.AddAsync(mayBienAp);
+        }
+        else
+        {
+            // Cập nhật
+            mayBienAp = await _context.NvMaybienaps.Where(r => r.Mapmis == createOrUpdateFeature.id).FirstAsync();
+            mayBienAp.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature, Formatting.Indented);
+        }
+        await _context.SaveChangesAsync();
+        return mayBienAp.Mapmis;
+    }
+
+    private async Task<string> AddOrUpdateThanhCai(CreateOrUpdateFeature createOrUpdateFeature)
+    {
+        NvThanhcai thanhCai;
+        if (string.IsNullOrEmpty(createOrUpdateFeature.id))
+        {
+            // Thêm mới
+            thanhCai = new NvThanhcai();
+            thanhCai.Mapmis = Guid.NewGuid().ToString();
+            createOrUpdateFeature.id = thanhCai.Mapmis;
+            thanhCai.Tthientai = "Đóng";
+            thanhCai.Maudong = "#ff0000";
+            thanhCai.Maucat = "#0000ff";
+            thanhCai.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature, Formatting.Indented);
+            await _context.NvThanhcais.AddAsync(thanhCai);
+        }
+        else
+        {
+            // Cập nhật
+            thanhCai = await _context.NvThanhcais.Where(r => r.Mapmis == createOrUpdateFeature.id).FirstAsync();
+            thanhCai.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature, Formatting.Indented);
+        }
+        await _context.SaveChangesAsync();
+        return thanhCai.Mapmis;
+    }
+
+    private async Task<string> AddOrUpdateDuongDay(CreateOrUpdateFeature createOrUpdateFeature)
+    {
+        NvDuongday duongDay;
+        if (string.IsNullOrEmpty(createOrUpdateFeature.id))
+        {
+            // Thêm mới
+            duongDay = new NvDuongday();
+            duongDay.Mapmis = Guid.NewGuid().ToString();
+            createOrUpdateFeature.id = duongDay.Mapmis;
+            duongDay.Tthientai = "Đóng";
+            duongDay.Maudong = "#ff0000";
+            duongDay.Maucat = "#0000ff";
+            duongDay.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature, Formatting.Indented);
+            await _context.NvDuongdays.AddAsync(duongDay);
+        }
+        else
+        {
+            // Cập nhật
+            duongDay = await _context.NvDuongdays.Where(r => r.Mapmis == createOrUpdateFeature.id).FirstAsync();
+            duongDay.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature, Formatting.Indented);
+        }
+        await _context.SaveChangesAsync();
+        return duongDay.Mapmis;
+    }
+
+    public async Task<string> DeleteFeature(CreateOrUpdateFeature createOrUpdateFeature)
+    {
+        switch (createOrUpdateFeature.featureType)
+        {
+            case FeatureType.DuongDay:
+                var duongDay = _context.NvDuongdays.Where(it => it.Mapmis == createOrUpdateFeature.id!).FirstOrDefault();
+                _context.NvDuongdays.Remove(duongDay!);
+                break;
+            case FeatureType.Role:
+                var role = _context.NvRoles.Where(it => it.Mapmis == createOrUpdateFeature.id!).FirstOrDefault();
+                _context.NvRoles.Remove(role!);
+                break;
+            case FeatureType.MayBienAp:
+                var mayBienAp = _context.NvMaybienaps.Where(it => it.Mapmis == createOrUpdateFeature.id!).FirstOrDefault();
+                _context.NvMaybienaps.Remove(mayBienAp!);
+                break;
+            case FeatureType.ThanhCai:
+                var thanhCai = _context.NvThanhcais.Where(it => it.Mapmis == createOrUpdateFeature.id!).FirstOrDefault();
+                _context.NvThanhcais.Remove(thanhCai!);
+                break;
+            default:
+                return "";
+        }
+        await _context.SaveChangesAsync();
+        return "";
     }
 }
