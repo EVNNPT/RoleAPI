@@ -1,5 +1,7 @@
 using RoleDatas.DBModels;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using RoleDataModel.Models;
 
 namespace RoleServices;
 public class RoLeServices : IRoLeServices
@@ -74,6 +76,19 @@ public class RoLeServices : IRoLeServices
         ret.Daunoicuoi = item.Daunoicuoi;
         ret.Ghichu = item.Ghichu;
 
+        if (item.Tthientai == "Đóng" && !string.IsNullOrEmpty(ret.Jsongeo))
+        {
+            var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(ret.Jsongeo!);
+            json.options.color = ret.Maudong;
+            ret.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+        }
+        else if (item.Tthientai == "Cắt" && !string.IsNullOrEmpty(ret.Jsongeo))
+        {
+            var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(ret.Jsongeo!);
+            json.options.color = ret.Maucat;
+            ret.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+        }
+
         var getDSDDs = await _context.NvThietbithuocdds.Where(it => it.Matbkhac == item.Mapmis && it.Loaitbkhac == "RoLe").ToListAsync();
         for (var i = 0; i < getDSDDs.Count; i++)
         {
@@ -81,6 +96,20 @@ public class RoLeServices : IRoLeServices
             for (var k = 0; k < getDDs.Count; k++)
             {
                 getDDs[k].Tthientai = item.Tthientai;
+                if (item.Tthientai == "Đóng" && !string.IsNullOrEmpty(getDDs[k].Jsongeo))
+                {
+                    var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(getDDs[k].Jsongeo!);
+                    json.options.color = ret.Maudong;
+                    getDDs[k].Maudong = ret.Maudong;
+                    getDDs[k].Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+                }
+                else if (item.Tthientai == "Cắt" && !string.IsNullOrEmpty(getDDs[k].Jsongeo))
+                {
+                    var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(getDDs[k].Jsongeo!);
+                    json.options.color = ret.Maucat;
+                    getDDs[k].Maucat = ret.Maucat;
+                    getDDs[k].Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+                }
             }
             var getDSTBs = await _context.NvThietbithuocdds.Where(it => it.Maduongday == getDSDDs[i].Maduongday).ToListAsync();
             for (var j = 0; j < getDSTBs.Count; j++)
@@ -92,6 +121,20 @@ public class RoLeServices : IRoLeServices
                         if (tc != null)
                         {
                             tc.Tthientai = item.Tthientai;
+                            if (item.Tthientai == "Đóng" && !string.IsNullOrEmpty(tc.Jsongeo))
+                            {
+                                var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(tc.Jsongeo!);
+                                json.options.color = ret.Maudong;
+                                tc.Maudong = ret.Maudong;
+                                tc.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+                            }
+                            else if (item.Tthientai == "Cắt" && !string.IsNullOrEmpty(tc.Jsongeo))
+                            {
+                                var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(tc.Jsongeo!);
+                                json.options.color = ret.Maucat;
+                                tc.Maucat = ret.Maucat;
+                                tc.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+                            }
                         }
                         break;
                     case "MayBienAp":
@@ -99,6 +142,20 @@ public class RoLeServices : IRoLeServices
                         if (mba != null)
                         {
                             mba.Tthientai = item.Tthientai;
+                            if (item.Tthientai == "Đóng" && !string.IsNullOrEmpty(mba.Jsongeo))
+                            {
+                                var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(mba.Jsongeo!);
+                                json.options.color = ret.Maudong;
+                                mba.Maudong = ret.Maudong;
+                                mba.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+                            }
+                            else if (item.Tthientai == "Cắt" && !string.IsNullOrEmpty(mba.Jsongeo))
+                            {
+                                var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(mba.Jsongeo!);
+                                json.options.color = ret.Maucat;
+                                mba.Maucat = ret.Maucat;
+                                mba.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+                            }
                         }
                         break;
                     default:
