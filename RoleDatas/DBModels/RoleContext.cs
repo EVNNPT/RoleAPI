@@ -199,6 +199,10 @@ public partial class RoleContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("TUTRAM");
+            entity.Property(e => e.Id)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("ID");
         });
 
         modelBuilder.Entity<NvFiledinhkem>(entity =>

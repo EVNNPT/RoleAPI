@@ -73,6 +73,7 @@ public class DuongDayServices : IDuongDayServices
         ret.Daunoidau = item.Daunoidau;
         ret.Daunoicuoi = item.Daunoicuoi;
         ret.Ghichu = item.Ghichu;
+        ret.Id = item.Id;
         _ = await _context.SaveChangesAsync();
     }
 
