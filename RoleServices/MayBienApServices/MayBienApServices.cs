@@ -1,5 +1,7 @@
 using RoleDatas.DBModels;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using RoleDataModel.Models;
 
 namespace RoleServices;
 public class MayBienApServices : IMayBienApServices
@@ -70,6 +72,20 @@ public class MayBienApServices : IMayBienApServices
         ret.Maucat = item.Maucat;
         ret.Daunoi = item.Daunoi;
         ret.Ghichu = item.Ghichu;
+
+        if (item.Tthientai == "Đóng" && !string.IsNullOrEmpty(ret.Jsongeo))
+        {
+            var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(ret.Jsongeo!);
+            json.options.color = ret.Maudong;
+            ret.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+        }
+        else if (item.Tthientai == "Cắt" && !string.IsNullOrEmpty(ret.Jsongeo))
+        {
+            var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(ret.Jsongeo!);
+            json.options.color = ret.Maucat;
+            ret.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+        }
+
         _ = await _context.SaveChangesAsync();
     }
 

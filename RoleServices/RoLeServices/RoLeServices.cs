@@ -101,12 +101,14 @@ public class RoLeServices : IRoLeServices
                     var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(getDDs[k].Jsongeo!);
                     json.options.color = ret.Maudong;
                     getDDs[k].Maudong = ret.Maudong;
+                    getDDs[k].Maucat = ret.Maucat;
                     getDDs[k].Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
                 }
                 else if (item.Tthientai == "Cắt" && !string.IsNullOrEmpty(getDDs[k].Jsongeo))
                 {
                     var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(getDDs[k].Jsongeo!);
                     json.options.color = ret.Maucat;
+                    getDDs[k].Maudong = ret.Maudong;
                     getDDs[k].Maucat = ret.Maucat;
                     getDDs[k].Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
                 }
@@ -126,12 +128,14 @@ public class RoLeServices : IRoLeServices
                                 var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(tc.Jsongeo!);
                                 json.options.color = ret.Maudong;
                                 tc.Maudong = ret.Maudong;
+                                tc.Maucat = ret.Maucat;
                                 tc.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
                             }
                             else if (item.Tthientai == "Cắt" && !string.IsNullOrEmpty(tc.Jsongeo))
                             {
                                 var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(tc.Jsongeo!);
                                 json.options.color = ret.Maucat;
+                                tc.Maudong = ret.Maudong;
                                 tc.Maucat = ret.Maucat;
                                 tc.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
                             }
@@ -147,12 +151,14 @@ public class RoLeServices : IRoLeServices
                                 var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(mba.Jsongeo!);
                                 json.options.color = ret.Maudong;
                                 mba.Maudong = ret.Maudong;
+                                mba.Maucat = ret.Maucat;
                                 mba.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
                             }
                             else if (item.Tthientai == "Cắt" && !string.IsNullOrEmpty(mba.Jsongeo))
                             {
                                 var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(mba.Jsongeo!);
                                 json.options.color = ret.Maucat;
+                                mba.Maudong = ret.Maudong;
                                 mba.Maucat = ret.Maucat;
                                 mba.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
                             }

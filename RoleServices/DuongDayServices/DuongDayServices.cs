@@ -1,6 +1,7 @@
 ﻿using RoleDatas.DBModels;
 using Microsoft.EntityFrameworkCore;
 using RoleDataModel.Models;
+using Newtonsoft.Json;
 
 namespace RoleServices;
 public class DuongDayServices : IDuongDayServices
@@ -74,6 +75,20 @@ public class DuongDayServices : IDuongDayServices
         ret.Daunoicuoi = item.Daunoicuoi;
         ret.Ghichu = item.Ghichu;
         ret.Id = item.Id;
+
+        if (item.Tthientai == "Đóng" && !string.IsNullOrEmpty(ret.Jsongeo))
+        {
+            var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(ret.Jsongeo!);
+            json.options.color = ret.Maudong;
+            ret.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+        }
+        else if (item.Tthientai == "Cắt" && !string.IsNullOrEmpty(ret.Jsongeo))
+        {
+            var json = JsonConvert.DeserializeObject<CreateOrUpdateFeature>(ret.Jsongeo!);
+            json.options.color = ret.Maucat;
+            ret.Jsongeo = JsonConvert.SerializeObject(json, Formatting.Indented);
+        }
+
         _ = await _context.SaveChangesAsync();
     }
 
