@@ -202,7 +202,7 @@ public partial class ModelContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("TUTRAM");
             entity.Property(e => e.Idmap)
-                .HasMaxLength(100)
+                .HasMaxLength(200)
                 .IsUnicode(false)
                 .HasColumnName("IDMAP");
         });
