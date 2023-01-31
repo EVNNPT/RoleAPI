@@ -74,7 +74,7 @@ public class DuongDayServices : IDuongDayServices
         ret.Daunoidau = item.Daunoidau;
         ret.Daunoicuoi = item.Daunoicuoi;
         ret.Ghichu = item.Ghichu;
-        ret.Id = item.Id;
+        ret.Idmap = item.Idmap;
 
         if (item.Tthientai == "Đóng" && !string.IsNullOrEmpty(ret.Jsongeo))
         {

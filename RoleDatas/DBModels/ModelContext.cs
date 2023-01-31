@@ -201,10 +201,10 @@ public partial class ModelContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("TUTRAM");
-            entity.Property(e => e.Id)
+            entity.Property(e => e.Idmap)
                 .HasMaxLength(100)
                 .IsUnicode(false)
-                .HasColumnName("ID");
+                .HasColumnName("IDMAP");
         });
 
         modelBuilder.Entity<NvFiledinhkem>(entity =>

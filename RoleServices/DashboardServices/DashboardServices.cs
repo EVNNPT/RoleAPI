@@ -16,7 +16,7 @@ public class DashboardServices : IDashboardServices
     public async Task<List<SoLuongTBModel>> GetSoLuongTB()
     {
         var rets = new List<SoLuongTBModel>();
-        var sldd = _context.NvDuongdays.Select(it => it.Id).Distinct().Count();
+        var sldd = _context.NvDuongdays.Select(it => it.Idmap).Distinct().Count();
         var slrl = _context.NvRoles.Count();
         var slmba = _context.NvMaybienaps.Count();
         var sltc = _context.NvThanhcais.Count();
@@ -46,8 +46,8 @@ public class DashboardServices : IDashboardServices
     public async Task<List<SLTBDongCatModel>> GetSLTBDongCat()
     {
         var rets = new List<SLTBDongCatModel>();
-        var slddd = _context.NvDuongdays.Where(it => it.Tthientai == "Đóng").Select(it => it.Id).Distinct().Count();
-        var slddc = _context.NvDuongdays.Where(it => it.Tthientai == "Cắt").Select(it => it.Id).Distinct().Count();
+        var slddd = _context.NvDuongdays.Where(it => it.Tthientai == "Đóng").Select(it => it.Idmap).Distinct().Count();
+        var slddc = _context.NvDuongdays.Where(it => it.Tthientai == "Cắt").Select(it => it.Idmap).Distinct().Count();
         var slrld = _context.NvRoles.Where(it => it.Tthientai == "Đóng").Count();
         var slrlc = _context.NvRoles.Where(it => it.Tthientai == "Cắt").Count();
         var slmbad = _context.NvMaybienaps.Where(it => it.Tthientai == "Đóng").Count();

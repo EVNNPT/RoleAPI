@@ -60,5 +60,6 @@ public partial class NvDuongday
     public string? Daunoicuoi { get; set; }
 
     public string? Ghichu { get; set; }
-    public string? Id { get; set; }
+
+    public string? Idmap { get; set; }
 }

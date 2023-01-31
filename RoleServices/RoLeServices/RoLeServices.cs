@@ -92,7 +92,7 @@ public class RoLeServices : IRoLeServices
         var getDSDDs = await _context.NvThietbithuocdds.Where(it => it.Matbkhac == item.Mapmis && it.Loaitbkhac == "RoLe").ToListAsync();
         for (var i = 0; i < getDSDDs.Count; i++)
         {
-            var getDDs = await _context.NvDuongdays.Where(it => it.Id == getDSDDs[i].Maduongday).ToListAsync();
+            var getDDs = await _context.NvDuongdays.Where(it => it.Idmap == getDSDDs[i].Maduongday).ToListAsync();
             for (var k = 0; k < getDDs.Count; k++)
             {
                 getDDs[k].Tthientai = item.Tthientai;
