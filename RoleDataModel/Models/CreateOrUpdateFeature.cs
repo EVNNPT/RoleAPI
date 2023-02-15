@@ -9,6 +9,12 @@ public class Options
     public string? color { get; set; }
     public string? lineCap { get; set; }
     public string? lineJoin { get; set; }
+    public string? text { get; set; }
+    public int? fontSize { get; set; }
+    public string? fontFamily { get; set; }
+    public string? fontColor { get; set; }
+    public bool? isBold { get; set; }
+    public bool? isItalic { get; set; }
 }
 
 public class CreateOrUpdateFeature
@@ -25,7 +31,8 @@ public enum FeatureType
     Role = 0,
     ThanhCai = 1,
     MayBienAp = 2,
-    DuongDay = 3
+    DuongDay = 3,
+    Label = 4
 }
 
 public class LatLng

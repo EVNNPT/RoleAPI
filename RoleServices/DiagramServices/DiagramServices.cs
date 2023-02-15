@@ -21,6 +21,7 @@ public class DiagramServices : IDiagramServices
         ret.MayBienAps = await GetMayBienAps(id);
         ret.ThanhCais = await GetThanhCais(id);
         ret.DuongDays = await GetDuongDays(id);
+        ret.Labels = await GetLabels(id);
         return ret;
     }
 
@@ -76,6 +77,20 @@ public class DiagramServices : IDiagramServices
         return rets;
     }
 
+    private async Task<List<CreateOrUpdateFeature>> GetLabels(string diagramId)
+    {
+        var rets = new List<CreateOrUpdateFeature>();
+        var nvTexts = await _context.NvTexts.AsNoTracking()
+        .ToListAsync();
+        foreach (var text in nvTexts)
+        {
+            if (!string.IsNullOrEmpty(text.Jsongeo))
+                rets.Add(JsonConvert.DeserializeObject<CreateOrUpdateFeature>(text.Jsongeo));
+        }
+        return rets;
+    }
+
+
 
     private void RoleUpdateGeoJson(List<GeoJson> geoJsons, List<NvRole> nVRoles)
     {
@@ -116,6 +131,8 @@ public class DiagramServices : IDiagramServices
                 return await AddOrUpdateMayBienAp(createOrUpdateFeature);
             case FeatureType.ThanhCai:
                 return await AddOrUpdateThanhCai(createOrUpdateFeature);
+            case FeatureType.Label:
+                return await AddOrUpdateLabel(createOrUpdateFeature);
             default:
                 return "";
         }
@@ -221,6 +238,29 @@ public class DiagramServices : IDiagramServices
         return duongDay.Mapmis;
     }
 
+    private async Task<string> AddOrUpdateLabel(CreateOrUpdateFeature createOrUpdateFeature)
+    {
+        NvText text;
+        if (string.IsNullOrEmpty(createOrUpdateFeature.id))
+        {
+            // Thêm mới
+            text = new NvText();
+            text.Ma = Guid.NewGuid().ToString();
+            createOrUpdateFeature.id = text.Ma;
+            text.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature, Formatting.Indented);
+            await _context.NvTexts.AddAsync(text);
+        }
+        else
+        {
+            // Cập nhật
+            text = await _context.NvTexts.Where(r => r.Ma == createOrUpdateFeature.id).FirstAsync();
+            text.Jsongeo = JsonConvert.SerializeObject(createOrUpdateFeature, Formatting.Indented);
+        }
+        await _context.SaveChangesAsync();
+        return text.Ma;
+    }
+
+
     public async Task<string> DeleteFeature(CreateOrUpdateFeature createOrUpdateFeature)
     {
         switch (createOrUpdateFeature.featureType)
@@ -240,6 +280,10 @@ public class DiagramServices : IDiagramServices
             case FeatureType.ThanhCai:
                 var thanhCai = _context.NvThanhcais.Where(it => it.Mapmis == createOrUpdateFeature.id!).FirstOrDefault();
                 _context.NvThanhcais.Remove(thanhCai!);
+                break;
+            case FeatureType.Label:
+                var label = _context.NvTexts.Where(it => it.Ma == createOrUpdateFeature.id!).FirstOrDefault();
+                _context.NvTexts.Remove(label!);
                 break;
             default:
                 return "";
